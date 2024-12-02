@@ -5,7 +5,7 @@ def main():
     pygame.init()
     pygame.mixer.init()
     pygame.mixer.music.load('computer.mp3')
-    pygame.mixer.music.set_volume(0.3) 
+    pygame.mixer.music.set_volume(0.1) 
     pygame.mixer.music.play(loops=-1, start=0.0)
     sound_effect = pygame.mixer.Sound('door.wav')
     
