@@ -19,13 +19,13 @@ options = ["Play", "Quit"]
 user_input = ""
 input_rect = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 120, 300, 50)
 current_menu = "main"
-sound_effect = pygame.mixer.Sound('door.wav')
+sound_effect = pygame.mixer.Sound('monster_growl.wav')
 
 
 monster_dict = {
         'location': 0,
         "active": False,
-        "noise_location": ["left","right","front","behind"]
+        "noise_location": ['left','right','front','behind']
     }
 
 def draw_menu():
@@ -43,6 +43,13 @@ def draw_menu():
     screen.blit(input_surface, input_rect)
 
     pygame.display.flip()
+def death():
+    global current_menu
+    screen.fill(BLACK)
+
+    title_text = font.render("You Died", True, WHITE)
+    title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
+    screen.blit(title_text, title_rect)
 
 def draw_text():
     global current_menu
@@ -124,21 +131,19 @@ def gamemenu_handle_input(events, screen):
         if action == "back":
             current_menu = "main" 
         elif action in [str(num) for num in range(0, 13)]:
-            play_sound_direction(monster_dict["location"], action, sound_effect, 'right' )
-        else:
-            print(f"Sound Menu Action: {action}")
-
+            direct = monster_dict["noise_location"]
+            num = random.randint(1,3)
+            print(direct[num])
+            play_sound_direction(monster_dict["location"], action, sound_effect, direct[num] )
     elif current_menu == "shock_menu":
         if action == "back":
             current_menu = "main" 
-        else:
-            print(f"Shock Menu Action: {action}")
+        elif action in [str(num) for num in range(0, 13)]:
+            shock_monster(monster_dict["location"], action)
 
     elif current_menu == "map_menu":
         if action == "back":
             current_menu = "main" 
-        else:
-            print(f"Map Menu Action: {action}")
     return action 
 
 def game_loop():
@@ -162,7 +167,7 @@ def game_loop():
 
         if elapsed_time > 5000:
             if monster_dict["location"] == 12:
-                draw_text("You are Dead")
+                death()
                 pygame.display.flip()
                 pygame.time.wait(2000)
                 running = False
@@ -170,6 +175,7 @@ def game_loop():
                 rand_num = random.uniform(0, 1)
                 monster_dict['location'] = move_monster(monster_dict['location'], rand_num)
                 start_time = pygame.time.get_ticks()
+                print(f"Monster is at {monster_dict['location']}")
 
         pygame.display.flip()
         clock.tick(30)
@@ -204,14 +210,19 @@ def move_monster(current_location, rand_num):
    
     return current_location
 
+def shock_monster(monster_location, input_location):
+    global monster_dict
+    if monster_location == int(input_location):
+        monster_dict["location"] = 0
+        pygame.mixer.Sound('monster_hurt.wav').play()
 
 
 def play_sound_direction(monster_location, input_location, sound, direction):
     if monster_location == int(input_location):
         if direction == 'left':
-            pygame.mixer.Sound('doorL.wav').play()
+            pygame.mixer.Sound('monster_growlL.wav').play()
         elif direction == 'right':
-            pygame.mixer.Sound('doorR.wav').play()
+            pygame.mixer.Sound('monster_growR.wav').play()
         elif direction == 'behind':
             sound.set_volume(0.5) 
             sound.play()
