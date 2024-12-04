@@ -1,5 +1,5 @@
 import time
-import pygame
+import pygame # type: ignore
 
 def main():
     pygame.init()
