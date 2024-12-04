@@ -155,10 +155,10 @@ def game_loop():
                 pygame.quit()
                 sys.exit()
 
-        gamemenu_handle_input(events, screen)  # Handle inputs dynamically
+        gamemenu_handle_input(events, screen) 
         draw_text()
 
-        if elapsed_time > 5000:
+        if elapsed_time > 50000:
             if monster_dict["location"] == 12:
                 draw_text("You are Dead")
                 pygame.display.flip()
@@ -205,16 +205,18 @@ def move_monster(current_location, rand_num):
 
 
 def play_sound_direction(monster_location, input_location, sound, direction):
-    if direction == 'left':
-        pygame.mixer.Sound('doorL.wav').play()
-    elif direction == 'right':
-        pygame.mixer.Sound('doorR.wav').play()
-    elif direction == 'behind':
-        sound.set_volume(0.5) 
-        sound.play()
-    else:
-        sound.set_volume(1.0) 
-        sound.play()
+    if monster_location == int(input_location):
+        pygame.time.wait(2000)
+        if direction == 'left':
+            pygame.mixer.Sound('doorL.wav').play()
+        elif direction == 'right':
+            pygame.mixer.Sound('doorR.wav').play()
+        elif direction == 'behind':
+            sound.set_volume(0.5) 
+            sound.play()
+        else:
+            sound.set_volume(1.0) 
+            sound.play()
 
 def main_menu():
     while True:
