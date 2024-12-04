@@ -4,8 +4,7 @@ import math
 import sys
 
 pygame.init()
-pygame.font.init
-
+pygame.font.init()
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -21,6 +20,8 @@ user_input = ""
 input_rect = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 120, 300, 50)
 current_menu = "main"
 sound_effect = pygame.mixer.Sound('door.wav')
+
+
 monster_dict = {
         'location': 0,
         "active": False,
@@ -81,6 +82,7 @@ def mainmenu_handle_input():
                 if user_input.lower() == "play":
                     game_loop()
                 elif user_input.lower() == "quit":
+                    print("Exiting program..")
                     pygame.quit()
                     sys.exit()
                 else:
@@ -158,7 +160,7 @@ def game_loop():
         gamemenu_handle_input(events, screen) 
         draw_text()
 
-        if elapsed_time > 50000:
+        if elapsed_time > 5000:
             if monster_dict["location"] == 12:
                 draw_text("You are Dead")
                 pygame.display.flip()
@@ -206,7 +208,6 @@ def move_monster(current_location, rand_num):
 
 def play_sound_direction(monster_location, input_location, sound, direction):
     if monster_location == int(input_location):
-        pygame.time.wait(2000)
         if direction == 'left':
             pygame.mixer.Sound('doorL.wav').play()
         elif direction == 'right':
