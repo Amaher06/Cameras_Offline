@@ -11,3 +11,9 @@ Another challenge I faced was menu navigation. Initially, I wanted the player to
 One more issue was that the monster wasn’t attacking independently; it would wait for you to select an option before moving or attacking. I discovered that running the monster logic on a separate screen helped resolve this issue.
 
 I consider this version of the game a demo because I genuinely want to continue working on this project during winter break. I hope you’ll enjoy it!
+
+## Video link(3d audio doesn't work for this video)
+https://youtu.be/JxmFYmdyLE4
+
+## URL for Git Hub 
+https://github.com/Amaher06/Cameras_Offline
