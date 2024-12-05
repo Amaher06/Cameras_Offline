@@ -25,7 +25,7 @@ sound_effect = pygame.mixer.Sound('monster_growl.wav')
 monster_dict = {
         'location': 0,
         "active": False,
-        "noise_location": ['left','right','front','behind']
+        "noise_location": ['front','behind','left','right']
     }
 
 def draw_menu():
@@ -132,7 +132,7 @@ def gamemenu_handle_input(events, screen):
             current_menu = "main" 
         elif action in [str(num) for num in range(0, 13)]:
             direct = monster_dict["noise_location"]
-            num = random.randint(0,3)
+            num = random.randint(1,3)
             print(direct[num])
             play_sound_direction(monster_dict["location"], action, sound_effect, direct[num] )
     elif current_menu == "shock_menu":
